@@ -4,7 +4,7 @@ use {
     std::ffi::c_void,
     std::os::raw::c_ulong,
     std::sync::atomic::AtomicBool,
-    std::sync::Arc,
+    std::rc::Rc,
 
     glutin::platform::unix::{EventLoopWindowTargetExtUnix, WindowBuilderExtUnix, WindowExtUnix},
     image::ImageFormat,
@@ -131,7 +131,7 @@ fn create_gl_window<E>(
 pub struct Window {
     /// Flag tracking frame redraw requests from Wayland compositor.
     #[cfg(not(any(target_os = "macos", windows)))]
-    pub should_draw: Arc<AtomicBool>,
+    pub should_draw: Rc<AtomicBool>,
 
     /// Attached Wayland surface to request new frame events.
     #[cfg(not(any(target_os = "macos", windows)))]
@@ -197,7 +197,7 @@ impl Window {
             mouse_visible: true,
             windowed_context,
             #[cfg(not(any(target_os = "macos", windows)))]
-            should_draw: Arc::new(AtomicBool::new(true)),
+            should_draw: Rc::new(AtomicBool::new(true)),
             #[cfg(not(any(target_os = "macos", windows)))]
             wayland_surface,
         })

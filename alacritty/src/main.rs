@@ -10,7 +10,6 @@
 
 #[cfg(target_os = "macos")]
 use std::env;
-use std::error::Error;
 use std::fs;
 use std::io::{self, Write};
 use std::sync::Arc;
@@ -120,7 +119,7 @@ fn run(
     window_event_loop: GlutinEventLoop<Event>,
     config: Config,
     options: Options,
-) -> Result<(), Box<dyn Error>> {
+) -> Result<(), display::Error> {
     info!("Welcome to Alacritty");
 
     info!("Configuration files loaded from:");
